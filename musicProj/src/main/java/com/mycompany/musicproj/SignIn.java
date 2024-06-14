@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.musicproj;
 
 import java.io.BufferedReader;
@@ -10,12 +6,11 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Iterator;
-import java.util.Scanner;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import com.mycompany.musicproj.Appliance; // Import Appliance class
+import com.mycompany.musicproj.Appliance;
+import com.mycompany.musicproj.Credentials;
 
-import com.mycompany.musicproj.Credentials; // Import Credentials class
 /**
  *
  * @author Xu Last Name
@@ -71,14 +66,14 @@ public class SignIn {
                 System.out.println("Row " + (i + 1) + ":");
                 
                 int id = row.getInt("circid");
-                String date = row.getString("signIn");
+                String date = row.getString("signin");
 
                 System.out.println("ID: " + id);
-                System.out.println("Name: " + date);
+                System.out.println("Signin Date: " + date);
             }
 
             // Loop through the JSON array Method 2
-            // just grabs every key and value one by one.
+            // Just grabs every key and value one by one.
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject row = jsonArray.getJSONObject(i);
                 System.out.println("Row " + (i + 1) + ":");
@@ -95,20 +90,15 @@ public class SignIn {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
-        
     }
-    
-    
-    /*Params are:
-    
-    circid
-    sbarcode (student barcode)
-    ebarcode (equipment barcode)
-    signout (signout date)
-    signin (signin date)
+
+    /* Params are:
+       circid
+       sbarcode (student barcode)
+       ebarcode (equipment barcode)
+       signout (signout date)
+       signin (signin date)
     */
-           
     
     // Signs out equipment
     public static JSONObject signOut(Credentials credentials) {
@@ -121,10 +111,13 @@ public class SignIn {
                     credentials.getSignout() + "')";
 
             // Create JSON payload
-            String jsonPayload = "{\"query\": \"" + query + "\", \"password\": \"" + credentials.getPassword() + "\"}";
+            String jsonPayload = "{\"query\": \"" + query + "\", \"password\": \"" + "MRRD" + "\"}";
+
+            // Define the URL of the PHP script
+            String apiUrl = "https://rhhscs.com/database/dbaccess.php";
 
             // Create HTTP POST request
-            URL url = new URL(credentials.getApiUrl());
+            URL url = new URL(apiUrl);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json");
@@ -167,10 +160,13 @@ public class SignIn {
                     "' WHERE circid = " + credentials.getCircid();
 
             // Create JSON payload
-            String jsonPayload = "{\"query\": \"" + query + "\", \"password\": \"" + credentials.getPassword() + "\"}";
+            String jsonPayload = "{\"query\": \"" + query + "\", \"password\": \"" + "MRRD" + "\"}";
+
+            // Define the URL of the PHP script
+            String apiUrl = "https://rhhscs.com/database/dbaccess.php";
 
             // Create HTTP POST request
-            URL url = new URL(credentials.getApiUrl());
+            URL url = new URL(apiUrl);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json");
@@ -202,4 +198,4 @@ public class SignIn {
 
         return responseJson;
     }
-}}
+}
