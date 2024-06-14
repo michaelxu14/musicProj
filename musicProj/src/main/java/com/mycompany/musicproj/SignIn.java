@@ -18,6 +18,9 @@ import com.mycompany.musicproj.Credentials;
 
 
 public class SignIn {
+    
+    
+    //Temporarily prints out all data in the database
     public static void main(String[] args) {
         try {
             // Define the URL of the PHP script
