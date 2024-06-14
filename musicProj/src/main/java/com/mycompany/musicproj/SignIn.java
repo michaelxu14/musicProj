@@ -15,6 +15,8 @@ import com.mycompany.musicproj.Credentials;
  *
  * @author Xu Last Name
  */
+
+
 public class SignIn {
     public static void main(String[] args) {
         try {
@@ -93,7 +95,7 @@ public class SignIn {
     }
 
     /* Params are:
-       circid
+       circid (1, 2, 3, 4, 5, etc.)
        sbarcode (student barcode)
        ebarcode (equipment barcode)
        signout (signout date)
@@ -155,6 +157,7 @@ public class SignIn {
         JSONObject responseJson = null;
 
         try {
+            //Init stuff
             // Create SQL UPDATE query
             String query = "UPDATE Circulation SET signin = '" + credentials.getSignin() +
                     "' WHERE circid = " + credentials.getCircid();

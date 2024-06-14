@@ -11,6 +11,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import com.mycompany.musicproj.Appliance; // Import Appliance class
 
+
+//This class is purely for accessing the database remotely
+
+
+
 public class DatabaseAccess {
     public static void main(String[] args) {
         try {

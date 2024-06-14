@@ -14,11 +14,6 @@ public class Student {
     private int id;
     private int grade;
 
-    // Default constructor
-    public Student() {
-    }
-
-    
     public Student(String name, int id, int grade) {
         this.name = name;
         this.id = id;
