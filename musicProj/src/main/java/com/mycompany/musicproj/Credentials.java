@@ -1,22 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.musicproj;
+
 import java.util.Date;
-/**
- *
- * @author Xu Last Name
- */
-    
+
 public class Credentials {
-    private int circid;
+    private int circid;  // Circulation ID
     private String sbarcode;
     private String ebarcode;
     private Date signout;
     private Date signin;
 
-    // Constructor
+    // Constructor for signing out equipment
     public Credentials(int circid, String sbarcode, String ebarcode, Date signout, Date signin) {
         this.circid = circid;
         this.sbarcode = sbarcode;
@@ -25,7 +18,13 @@ public class Credentials {
         this.signin = signin;
     }
 
-    // Getter and Setter methods
+    // Constructor for signing in equipment
+    public Credentials(int circid, Date signin) {
+        this.circid = circid;
+        this.signin = signin;
+    }
+
+    // Getters and setters
     public int getCircid() {
         return circid;
     }
