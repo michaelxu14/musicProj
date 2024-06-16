@@ -21,7 +21,6 @@ public class SignIn {
     public static void main(String[] args) {
         getTablesInDatabase();
         //clearTable();
-        displayCirculationTable();
         registrationSystem();
     }
 
@@ -30,6 +29,7 @@ public class SignIn {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
+            displayCirculationTable();
             System.out.println("Welcome to the Equipment Registration System");
             System.out.println("1. Sign Out Equipment");
             System.out.println("2. Sign In Equipment");
@@ -45,15 +45,10 @@ public class SignIn {
 
                 System.out.print("Enter equipment barcode: ");
                 String ebarcode = scanner.nextLine();
-                
-                //If ebarcode gives a signedout status, say that the object cannot be signed out and return something
-                //System.out.println(isEquipmentSignedOut(ebarcode));
 
                 System.out.print("Enter sign out date (YYYY-MM-DD): ");
                 String signoutString = scanner.nextLine();
                 
-                
-
                 try {
                     // Convert the string date to a Date object
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -73,9 +68,8 @@ public class SignIn {
             //SIGN IN
             } else if (choice == 2) {
                 // Sign in equipment
-                System.out.print("Enter circulation ID: ");
-                int circid = scanner.nextInt();
-                scanner.nextLine(); // Consume newline
+                System.out.print("Enter equipment barcode: ");
+                String ebarcode = scanner.nextLine();
 
                 System.out.print("Enter sign in date (YYYY-MM-DD): ");
                 String signinString = scanner.nextLine();
@@ -85,8 +79,16 @@ public class SignIn {
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                     Date signin = dateFormat.parse(signinString);
 
+                    // Find circid based on ebarcode
+                    int circid = getCircIdByEbarcode(ebarcode);
+
+                    if (circid == -1) {
+                        System.out.println("No circulation ID found for equipment barcode " + ebarcode);
+                        continue;
+                    }
+
                     // Prepare credentials with circid and null sbarcode and ebarcode (handled in signIn method)
-                    Credentials credentials = new Credentials(circid, null, null, null, signin);
+                    Credentials credentials = new Credentials(circid, null, ebarcode, null, signin);
 
                     JSONObject response = signIn(credentials);
                     if (response != null) {
@@ -97,14 +99,13 @@ public class SignIn {
                     }
                 } catch (Exception e) {
                     System.out.println("Invalid date format. Please enter the date in YYYY-MM-DD format.");
-                }
-                
-                
-                
+                } 
             //EXIT
             } else if (choice == 3) {
                 System.out.println("Exiting the system. Goodbye!");
                 break;
+                
+            //INVALID INPUT
             } else {
                 System.out.println("Invalid option. Please try again.");
             }
@@ -119,7 +120,7 @@ public class SignIn {
         JSONObject responseJson = null;
 
         try {
-            // Convert Date to String for SQL query
+            // Convert Date to String 
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String signoutDateString = dateFormat.format(credentials.getSignout());
            
@@ -131,6 +132,7 @@ public class SignIn {
 
             // Create JSON payload
             String jsonPayload = "{\"query\": \"" + query + "\", \"password\": \"" + "MRRD" + "\"}";
+            System.out.println(jsonPayload);
 
             // Define the URL of the PHP script
             String apiUrl = "https://rhhscs.com/database/dbaccess.php";
@@ -193,6 +195,7 @@ public class SignIn {
             URL url = new URL(apiUrl);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
+            // Create HTTP POST 
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setDoOutput(true);
 
@@ -458,4 +461,57 @@ public class SignIn {
     }
     
     
+    
+    //Broken, to be fixed
+    //Not anymore, issue resolved
+    public static int getCircIdByEbarcode(String ebarcode) {
+        int circid = -1;
+
+        try {
+            // Define the SQL query to retrieve circid based on ebarcode
+            String query = "SELECT circid FROM Circulation WHERE ebarcode = '" + ebarcode + "' AND signin IS NULL";
+
+            // Create JSON payload
+            JSONObject jsonPayload = new JSONObject();
+            jsonPayload.put("query", query);
+            jsonPayload.put("password", "MRRD");
+
+            // Define the URL of the PHP script
+            String apiUrl = "https://rhhscs.com/database/dbaccess.php";
+
+            // Create HTTP POST request
+            URL url = new URL(apiUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setDoOutput(true);
+
+            // Write JSON payload to the connection
+            try (OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream())) {
+                writer.write(jsonPayload.toString());
+                writer.flush();
+            }
+
+            // Read response from the connection
+            StringBuilder response = new StringBuilder();
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+            }
+
+            // Parse JSON response to retrieve circid
+            JSONArray results = new JSONArray(response.toString());
+            if (results.length() > 0) {
+                JSONObject firstResult = results.getJSONObject(0);
+                circid = firstResult.getInt("circid");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return circid;
+    }
 }

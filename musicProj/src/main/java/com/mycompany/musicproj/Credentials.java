@@ -2,6 +2,11 @@ package com.mycompany.musicproj;
 
 import java.util.Date;
 
+/**
+ *
+ * @author Xu Last Name
+ */
+
 public class Credentials {
     private int circid;  // Circulation ID
     private String sbarcode;
