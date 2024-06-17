@@ -22,12 +22,20 @@ import java.util.Iterator;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ *
+ * @author Xu Last Name
+ */
 public class StudentUtility {
 
     private static final String API_URL = "https://rhhscs.com/database/dbaccess.php";
     private static final String PASSWORD = "MRRD";
 
     // Method to display all contents of the Student table
+
+    /**
+     *
+     */
     public static void displayAllStudents() {
         try {
             String query = "SELECT * FROM Student";
@@ -54,6 +62,13 @@ public class StudentUtility {
     }
 
     // Method to add a student to the Student table
+
+    /**
+     *
+     * @param id
+     * @param name
+     * @param grade
+     */
     public static void addStudent(int id, String name, int grade) {
         try {
             String query = String.format("INSERT INTO Student (id, name, grade) VALUES (%d, '%s', %d)", id, name, grade);
@@ -70,6 +85,10 @@ public class StudentUtility {
     }
 
     // Method to clear the Student table
+
+    /**
+     *
+     */
     public static void clearStudentTable() {
         try {
             String query = "DELETE FROM Student";
@@ -115,6 +134,10 @@ public class StudentUtility {
         return response;
     }
 
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         // Example usage:
         // Display all students

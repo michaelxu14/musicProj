@@ -15,9 +15,18 @@ import org.json.JSONObject;
 
 //THIS VERSION HAS A CONSOLE INTERFACE
 
+/**
+ *
+ * @author Xu Last Name
+ */
+
 
 public class SignIn {
 
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         getTablesInDatabase();
         //clearTable();
@@ -25,6 +34,10 @@ public class SignIn {
     }
 
     // Registration system method
+
+    /**
+     *
+     */
     public static void registrationSystem() {
         Scanner scanner = new Scanner(System.in);
 
@@ -116,63 +129,83 @@ public class SignIn {
 
     // Signs out equipment
     //must return a jsonobject
+
+    /**
+     *
+     * @param credentials
+     * @return
+     */
     public static JSONObject signOut(Credentials credentials) {
         JSONObject responseJson = null;
 
-        try {
-            // Convert Date to String 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            String signoutDateString = dateFormat.format(credentials.getSignout());
-           
-            
-            // Create SQL INSERT query
-            String query = "INSERT INTO Circulation (circid, sbarcode, ebarcode, signout) VALUES ("
-                    + credentials.getCircid() + ", '" + credentials.getSbarcode() + "', '" + credentials.getEbarcode() + "', '"
-                    + signoutDateString + "')";
+         try {
+        // Convert Date to String 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String signoutDateString = dateFormat.format(credentials.getSignout());
+       
+        
+        // Create SQL INSERT query
+        String query = "INSERT INTO Circulation (circid, sbarcode, ebarcode, signout) VALUES ("
+                + credentials.getCircid() + ", '" + credentials.getSbarcode() + "', '" + credentials.getEbarcode() + "', '"
+                + signoutDateString + "')";
+        
+        String updateQuery = "UPDATE Instruments SET availability = 0 WHERE ebarcode = '" + credentials.getEbarcode() + "'";
 
-            // Create JSON payload
-            String jsonPayload = "{\"query\": \"" + query + "\", \"password\": \"" + "MRRD" + "\"}";
-            System.out.println(jsonPayload);
+        // Create JSON payload
+        String jsonPayload = "{\"query\": \"" + query + "\", \"password\": \"" + "MRRD" + "\"}";
+        //String jsonPayload = "{\"queries\": [\"" + query + "\", \"" + updateQuery + "\"], \"password\": \"" + "MRRD" + "\"}";
+        //String jsonPayload2 = "{\"query\": \"" + updateQuery + "\", \"password\": \"" + "MRRD" + "\"}";
+        System.out.println(jsonPayload);
+        //System.out.println(jsonPayload2);
+        // Define the URL of the PHP script
+        String apiUrl = "https://rhhscs.com/database/dbaccess.php";
 
-            // Define the URL of the PHP script
-            String apiUrl = "https://rhhscs.com/database/dbaccess.php";
+        // Create HTTP POST request
+        URL url = new URL(apiUrl);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection(); 
+        connection.setRequestMethod("POST");
+        connection.setRequestProperty("Content-Type", "application/json");
+        connection.setDoOutput(true);
 
-            // Create HTTP POST request
-            URL url = new URL(apiUrl);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("POST");
-            connection.setRequestProperty("Content-Type", "application/json");
-            connection.setDoOutput(true);
+        // Write JSON payload to the connection
+        OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
+        writer.write(jsonPayload);
+        writer.flush();
+        //writer.write(jsonPayload2);
+        //writer.flush();
+        // Read response from the connection
+        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        StringBuilder response = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            response.append(line);
+        }
 
-            // Write JSON payload to the connection
-            OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
-            writer.write(jsonPayload);
-            writer.flush();
+        // Close connections
+        writer.close();
+        reader.close();
 
-            // Read response from the connection
-            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            StringBuilder response = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                response.append(line);
-            }
-
-            // Close connections
-            writer.close();
-            reader.close();
-
-            // Print the response to debug
-            //System.out.println("Response from server: " + response.toString());
-
-
+        // Print the response to debug
+        
+        //System.out.println("Response from server: " + response.toString());
+        System.out.println(connection.getErrorStream());
+        
+        
         } catch (Exception e) {
             e.printStackTrace();
+            
         }
 
         return responseJson;
     }
 
     // Signs in equipment
+
+    /**
+     *
+     * @param credentials
+     * @return
+     */
     public static JSONObject signIn(Credentials credentials) {
         JSONObject responseJson = null;
 
@@ -229,6 +262,11 @@ public class SignIn {
     }
 
     // Method to get the next available circulation ID
+
+    /**
+     *
+     * @return
+     */
     public static int getNextCircId() {
         int nextCircId = -1;
 
@@ -284,6 +322,10 @@ public class SignIn {
     
     
     // Utility, clear a table if things go wrong
+
+    /**
+     *
+     */
     public static void clearTable() {
         try {
             // Define the SQL query to truncate the table
@@ -341,6 +383,10 @@ public class SignIn {
     
     
     //Just for monitoring if tables exist within the database
+
+    /**
+     *
+     */
     public static void getTablesInDatabase() {
         try {
             // Define the SQL query to get the list of tables
@@ -395,6 +441,9 @@ public class SignIn {
         }
     }
     
+    /**
+     *
+     */
     public static void displayCirculationTable() {
         try {
             // Define the SQL query to select all records from Circulation table
@@ -464,6 +513,12 @@ public class SignIn {
     
     //Broken, to be fixed
     //Not anymore, issue resolved
+
+    /**
+     *
+     * @param ebarcode
+     * @return
+     */
     public static int getCircIdByEbarcode(String ebarcode) {
         int circid = -1;
 
@@ -514,4 +569,7 @@ public class SignIn {
 
         return circid;
     }
+    
+    
+    
 }

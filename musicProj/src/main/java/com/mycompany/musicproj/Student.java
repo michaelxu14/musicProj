@@ -6,7 +6,7 @@ package com.mycompany.musicproj;
 
 /**
  *
- * @author Xu Last Name
+ * @author peter
  */
 public class Student {
 
@@ -14,33 +14,62 @@ public class Student {
     private int id;
     private int grade;
 
+    /**
+     *
+     * @param name
+     * @param id
+     * @param grade
+     */
     public Student(String name, int id, int grade) {
         this.name = name;
         this.id = id;
         this.grade = grade;
     }
 
-  
+    /**
+     *
+     * @return
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     *
+     * @param name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getGrade() {
         return grade;
     }
 
+    /**
+     *
+     * @param grade
+     */
     public void setGrade(int grade) {
         this.grade = grade;
     }

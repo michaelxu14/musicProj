@@ -16,12 +16,20 @@ import java.net.URL;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ *
+ * @author Xu Last Name
+ */
 public class EquipmentUtility {
 
     private static final String API_URL = "https://rhhscs.com/database/dbaccess.php";
     private static final String PASSWORD = "MRRD";
 
     // Method to display all contents of the Equipment table
+
+    /**
+     *
+     */
     public static void displayEquipment() {
         try {
             String query = "SELECT * FROM Equipment";
@@ -59,6 +67,16 @@ public class EquipmentUtility {
     }
 
     // Method to add a new equipment item
+
+    /**
+     *
+     * @param name
+     * @param category
+     * @param signedOut
+     * @param id
+     * @param type
+     * @param year
+     */
     public static void addEquipment(String name, String category, boolean signedOut, int id, String type, int year) {
         try {
             int availabilityInt = signedOut ? 1 : 0; // Convert boolean to TINYINT
@@ -80,6 +98,10 @@ public class EquipmentUtility {
     }
 
     // Method to clear the Equipment table
+
+    /**
+     *
+     */
     public static void clearEquipmentTable() {
         try {
             String query = "DELETE FROM Equipment";
@@ -128,6 +150,10 @@ public class EquipmentUtility {
         return response;
     }
 
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         
         
@@ -137,12 +163,14 @@ public class EquipmentUtility {
         /*
         addEquipment("Music Book", "Misc", false, 23450, "Misc", 2006);
         addEquipment("Microphone", "Misc", false, 23451, "Misc", 2006);
+        addEquipment("Alto Saxophone", "Woodwinds", false, 23452, "Instrument", 2006);
+        addEquipment("Alto Saxophone", "Woodwinds", false, 23453, "Instrument", 2006);
+        addEquipment("Alto Saxophone", "Woodwinds", false, 23454, "Instrument", 2006);
         addEquipment("Trumpet", "Brass", false, 23456, "Instrument", 2006);
         addEquipment("Tenor Saxophone", "Woodwinds", false, 23457, "Instrument", 2006);
         addEquipment("Stand", "Misc", false, 23458, "Misc", 2006);
         addEquipment("Snare Drum", "Percussion", false, 23459, "Instrument", 2006);
         */
-        
         // Clear equipment table
         //clearEquipmentTable();
         

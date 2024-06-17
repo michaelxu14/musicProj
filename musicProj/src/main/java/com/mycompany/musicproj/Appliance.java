@@ -15,6 +15,14 @@ public class Appliance {
     private int type; // Brass, strings, percussion, winds
     private int year;
 
+    /**
+     *
+     * @param name
+     * @param signedOut
+     * @param id
+     * @param type
+     * @param year
+     */
     public Appliance(String name, boolean signedOut, int id, int type, int year) {
         this.name = name;
         this.signedOut = signedOut;
