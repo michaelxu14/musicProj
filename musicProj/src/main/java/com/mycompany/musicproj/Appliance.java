@@ -8,24 +8,28 @@ package com.mycompany.musicproj;
  *
  * @author Xu Last Name
  */
-public class Instrument {
-   private String name;
-   private boolean signedOut; //True if instrument is signed out
-   private int identifier; //Bar code stuff
-   private int type; //Brass, strings, percussion, winds
-   private double age;
-   
-   
-   
-   
-   
-   public Instrument(String name, boolean signedOut, int identifier, int type, double age){
-       this.name = name;
-       this.signedOut = signedOut;
-       this.identifier = identifier;
-       this.type = type;
-       this.age = age;
-   }
+public class Appliance {
+    private String name;
+    private boolean signedOut; // True if instrument is signed out
+    private int id; // Bar code stuff
+    private int type; // Brass, strings, percussion, winds
+    private int year;
+
+    /**
+     *
+     * @param name
+     * @param signedOut
+     * @param id
+     * @param type
+     * @param year
+     */
+    public Appliance(String name, boolean signedOut, int id, int type, int year) {
+        this.name = name;
+        this.signedOut = signedOut;
+        this.id = id;
+        this.type = type;
+        this.year = year;
+    }
 
     /**
      * @return the name
@@ -56,17 +60,17 @@ public class Instrument {
     }
 
     /**
-     * @return the identifier
+     * @return the id
      */
-    public int getIdentifier() {
-        return identifier;
+    public int getId() {
+        return id;
     }
 
     /**
-     * @param identifier the identifier to set
+     * @param id the id to set
      */
-    public void setIdentifier(int identifier) {
-        this.identifier = identifier;
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**
@@ -84,18 +88,16 @@ public class Instrument {
     }
 
     /**
-     * @return the age
+     * @return the year
      */
-    public double getAge() {
-        return age;
+    public int getYear() {
+        return year;
     }
 
     /**
-     * @param age the age to set
+     * @param year the year to set
      */
-    public void setAge(double age) {
-        this.age = age;
+    public void setYear(int year) {
+        this.year = year;
     }
-   
-   
 }
