@@ -81,6 +81,9 @@ public class SignIn {
             //SIGN IN
             } else if (choice == 2) {
                 // Sign in equipment
+                System.out.print("Enter student barcode: ");
+                String sbarcode = scanner.nextLine();
+                
                 System.out.print("Enter equipment barcode: ");
                 String ebarcode = scanner.nextLine();
 
@@ -93,6 +96,7 @@ public class SignIn {
                     Date signin = dateFormat.parse(signinString);
 
                     // Find circid based on ebarcode
+                    
                     int circid = getCircIdByEbarcode(ebarcode);
 
                     if (circid == -1) {
@@ -101,7 +105,7 @@ public class SignIn {
                     }
 
                     // Prepare credentials with circid and null sbarcode and ebarcode (handled in signIn method)
-                    Credentials credentials = new Credentials(circid, null, ebarcode, null, signin);
+                    Credentials credentials = new Credentials(circid, sbarcode, ebarcode, null, signin);
 
                     JSONObject response = signIn(credentials);
                     if (response != null) {
@@ -154,8 +158,8 @@ public class SignIn {
         // Create JSON payload
         String jsonPayload = "{\"query\": \"" + query + "\", \"password\": \"" + "MRRD" + "\"}";
         //String jsonPayload = "{\"queries\": [\"" + query + "\", \"" + updateQuery + "\"], \"password\": \"" + "MRRD" + "\"}";
-        //String jsonPayload2 = "{\"query\": \"" + updateQuery + "\", \"password\": \"" + "MRRD" + "\"}";
-        System.out.println(jsonPayload);
+        String jsonPayload2 = "{\"query\": \"" + updateQuery + "\", \"password\": \"" + "MRRD" + "\"}";
+        //System.out.println(jsonPayload);
         //System.out.println(jsonPayload2);
         // Define the URL of the PHP script
         String apiUrl = "https://rhhscs.com/database/dbaccess.php";
@@ -171,8 +175,8 @@ public class SignIn {
         OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
         writer.write(jsonPayload);
         writer.flush();
-        //writer.write(jsonPayload2);
-        //writer.flush();
+        writer.write(jsonPayload2);
+        writer.flush();
         // Read response from the connection
         BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
         StringBuilder response = new StringBuilder();
@@ -224,6 +228,9 @@ public class SignIn {
             // Define the URL of the PHP script
             String apiUrl = "https://rhhscs.com/database/dbaccess.php";
 
+            
+            
+            //BORING STUFF BEGINS HERE
             // Create HTTP POST request
             URL url = new URL(apiUrl);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -251,7 +258,7 @@ public class SignIn {
 
             // Print the response to debug
             System.out.println("Response from server: " + response.toString());
-
+            //BORING STUFF ENDS HERE
             
 
         } catch (Exception e) {

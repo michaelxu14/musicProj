@@ -156,8 +156,6 @@ public class EquipmentUtility {
      */
     public static void main(String[] args) {
         
-        
-
         // Add new equipment
         //Name, cat, signed, id, type, year
         /*
