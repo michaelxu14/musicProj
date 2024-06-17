@@ -38,7 +38,6 @@ public class BackgroundJFrame1 extends javax.swing.JFrame {
 
         jButton3.setText("jButton1");
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\lyvka\\Downloads\\startpagebackground.PNG")); // NOI18N
         jLabel2.setText("jLabel1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -71,7 +70,6 @@ public class BackgroundJFrame1 extends javax.swing.JFrame {
         });
         getContentPane().add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 210, 100, 50));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\lyvka\\Downloads\\startpagebackground.PNG")); // NOI18N
         jLabel1.setText("jLabel1");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 615, -1));
 

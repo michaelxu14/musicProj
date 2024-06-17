@@ -28,7 +28,7 @@ public class SignIn {
      * @param args
      */
     public static void main(String[] args) {
-        getTablesInDatabase();
+        //getTablesInDatabase();
         //clearTable();
         registrationSystem();
     }
@@ -42,7 +42,8 @@ public class SignIn {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            displayCirculationTable();
+            //For debugging, comment off when presenting
+            //displayCirculationTable();
             System.out.println("Welcome to the Equipment Registration System");
             System.out.println("1. Sign Out Equipment");
             System.out.println("2. Sign In Equipment");
@@ -175,8 +176,8 @@ public class SignIn {
         OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
         writer.write(jsonPayload);
         writer.flush();
-        writer.write(jsonPayload2);
-        writer.flush();
+        //writer.write(jsonPayload2);
+        //writer.flush();
         // Read response from the connection
         BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
         StringBuilder response = new StringBuilder();
